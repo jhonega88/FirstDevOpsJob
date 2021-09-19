@@ -21,6 +21,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)configuration/iaac/aks/kubernetes/'
     backendServiceArm: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
     backendAzureRmResourceGroupName: 'resposDevOps'
     backendAzureRmStorageAccountName: 'stgdevopsj'
