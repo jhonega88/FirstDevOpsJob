@@ -27,13 +27,14 @@ steps:
     backendAzureRmStorageAccountName: 'stgdevopsj'
     backendAzureRmContainerName: 'containerjhon'
     backendAzureRmKey: 'tf'
-- task: TerraformTaskValidate
+
+- task: TerraformTaskValidate@3
   displayName: 'terraform validate'
   inputs:
     command: validate
     workingDirectory: $(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes
     
- - task: TerraformCLI@0
+- task: TerraformCLI@4
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes'
