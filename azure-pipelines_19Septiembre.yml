@@ -31,7 +31,7 @@ steps:
 - task: TerraformTaskValidate@3
   displayName: 'terraform validate'
   inputs:
-    command: validate
+    command: 'validate'
     workingDirectory: $(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes
     
 - task: TerraformCLI@4
