@@ -33,41 +33,10 @@ steps:
     command: validate
     workingDirectory: $(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes
     
-- stage: Deploy
-  jobs:
-    # track deployments on the environment
-  - deployment: Deploy_Terraform
-    pool:
-      vmImage: 'ubuntu-latest'
-    # creates an environment if it doesn’t exist
-    environment: 'DEV'
-    strategy:
-      # default deployment strategy
-      runOnce:
-        deploy:
-          steps:
-          # - download: current
-          #   artifact: terraform_out
-          - task: TerraformTaskDeploy
-            displayName: 'terraform init'
-            inputs:
-              command: init
-              workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes'
-              backendType: azurerm
-              backendServiceArm: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
-              backendAzureRmResourceGroupName: 'resposDevOps'
-              backendAzureRmStorageAccountName: 'stgdevopsj'
-              backendAzureRmContainerName: 'containerjhon'
-              backendAzureRmKey: 'tf'
-          - task: TerraformTaskDeployPlan
-            displayName: 'terraform plan'
-            inputs:
-              command: plan
-              workingDirectory: $(Pipeline.Workspace)/terraform_out
-              terraformVersion: 0.12.6
-          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-            displayName: 'terraform apply'
-            inputs:
-              command: apply
-              workingDirectory: $(Pipeline.Workspace)/terraform_out
-              terraformVersion: 0.12.6
+ - task: TerraformCLI@0
+  inputs:
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes'
+    environmentServiceName: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
+    #runAzLogin: true
+    allowTelemetryCollection: true
