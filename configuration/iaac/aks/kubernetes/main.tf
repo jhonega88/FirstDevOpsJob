@@ -4,7 +4,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "k8s" {
   name     = "${var.prefix}-k8s-resources"
-  location = var.location
+  location = "${var.location}"
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
@@ -21,7 +21,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   
   service_principal {
     client_id     = "${var.client_id}"
-    client_secret = "{var.client_secret}"
+    client_secret = "${var.client_secret}"
   }
 
   tags = {
