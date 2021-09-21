@@ -10,16 +10,17 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
+- script: echo Despliegue AKS con Terraform!
   displayName: 'Run a one-line script'
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
     secureFile: 'azure_rsa.pub'
+
 - task: TerraformCLI@0
   inputs:
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
     backendType: 'azurerm'
     backendServiceArm: 'Azure_ServConnection'
     ensureBackend: true
@@ -30,6 +31,7 @@ steps:
     backendAzureRmContainerName: 'containerjhon'
     backendAzureRmKey: 'k8.tfstate'
     allowTelemetryCollection: true
+
 
 - task: TerraformCLI@0
   inputs:
