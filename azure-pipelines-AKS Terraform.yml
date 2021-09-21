@@ -1,5 +1,3 @@
-
-
 trigger:
 - master
 
@@ -9,31 +7,34 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+
+- script:
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
     secureFile: 'azure_rsa.pub'
-  
+
 - task: TerraformCLI@0
   inputs:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
-    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     backendType: 'azurerm'
     backendServiceArm: 'Azure_ServConnection'
     ensureBackend: true
-    backendAzureRmResourceGroupName: 'terraform-backend-rg'
+    backendAzureRmResourceGroupName: 'resposDevOps'
     backendAzureRmResourceGroupLocation: 'eastus'
-    backendAzureRmStorageAccountName: 'storageajg'
-    backendAzureRmContainerName: 'storageacctjg'
-    backendAzureRmKey: 'Kubernetes-dev.tfstate'
-    allowTelemetryCollection: true
+    backendAzureRmStorageAccountName: 'stgdevopsj'
+    backendAzureRmStorageAccountSku: 'StorageV2'
+    backendAzureRmContainerName: 'containerjhon'
+    backendAzureRmKey: 'k8s.tfstate'
 
 - task: TerraformCLI@0
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
     environmentServiceName: 'Azure_ServConnection'
-    #runAzLogin: true
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
-    allowTelemetryCollection: true
