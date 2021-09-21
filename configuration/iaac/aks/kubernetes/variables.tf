@@ -1,5 +1,5 @@
 variable "prefix" {
-  description = "devOpsJhon"
+  description = "k8sjhon"
 }
 
 variable "location" {
