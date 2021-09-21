@@ -1,7 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+
+
+trigger:
+- master
 
 pool:
   vmImage: ubuntu-latest
@@ -9,34 +9,29 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
-- script:
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
-    secureFile: 'azure_rsa.pub'
-
+    secureFile: 'azure_rsa.pub'    
 - task: TerraformCLI@0
   inputs:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     backendType: 'azurerm'
-    backendServiceArm: 'Azure_ServConnection'
+    backendServiceArm: 'Azure-resource-aforo255'
     ensureBackend: true
-    backendAzureRmResourceGroupName: 'resposDevOps'
-    backendAzureRmResourceGroupLocation: 'eastus'
-    backendAzureRmStorageAccountName: 'stgdevopsj'
-    backendAzureRmStorageAccountSku: 'StorageV2'
-    backendAzureRmContainerName: 'containerjhon'
-    backendAzureRmKey: 'k8.tfstate'
-
+    backendAzureRmResourceGroupName: 'terraform-backend-rg'
+    backendAzureRmResourceGroupLocation: 'westeurope'
+    backendAzureRmStorageAccountName: 'storageacctaforo255'
+    backendAzureRmContainerName: 'storageacctaforo255container'
+    backendAzureRmKey: 'Kubernetes-dev.tfstate'
+    allowTelemetryCollection: true
 - task: TerraformCLI@0
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
-    environmentServiceName: 'Azure_ServConnection'
+    environmentServiceName: 'Azure-resource-aforo255'
+    #runAzLogin: true
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
+    allowTelemetryCollection: true
