@@ -12,30 +12,28 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-- task: TerraformTaskV2@2
+- task: DownloadSecureFile@1
+  name: publickey
   inputs:
-    provider: 'azurerm'
+    secureFile: 'azure_rsa.pub'
+- task: TerraformCLI@0
+  inputs:
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes'
-    backendServiceArm: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendType: 'azurerm'
+    backendServiceArm: 'Azure_ServConnection'
+    ensureBackend: true
     backendAzureRmResourceGroupName: 'resposDevOps'
+    backendAzureRmResourceGroupLocation: 'eastus'
     backendAzureRmStorageAccountName: 'stgdevopsj'
+    backendAzureRmStorageAccountSku: 'StorageV2'
     backendAzureRmContainerName: 'containerjhon'
-    backendAzureRmKey: 'tf'
+    backendAzureRmKey: 'k8.tfstate'
+    allowTelemetryCollection: true
 
-# - task: TerraformTaskValidate@3
-#   displayName: 'terraform validate'
-#   inputs:
-#     command: 'validate'
-#     workingDirectory: $(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes
 - task: TerraformCLI@0
   inputs:
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes'
-    environmentServiceName: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
-    allowTelemetryCollection: true'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
+    environmentServiceName: 'Azure_ServConnection'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
