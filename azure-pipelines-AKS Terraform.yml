@@ -24,7 +24,7 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     backendType: 'azurerm'
-    backendServiceArm: 'Azure_ServConnection'
+    backendServiceArm: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
     ensureBackend: true
     backendAzureRmResourceGroupName: 'resposDevOps'
     backendAzureRmResourceGroupLocation: 'eastus'
@@ -38,6 +38,6 @@ steps:
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
-    environmentServiceName: 'Azure_ServConnection'
+    environmentServiceName: 'Visual Studio Professional con MSDN (8995bff8-4129-4a74-ac30-44a16b4cabd4)'
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     allowTelemetryCollection: true
