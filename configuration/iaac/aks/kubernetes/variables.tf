@@ -1,7 +1,30 @@
-variable "prefix" {
-  description = "k8sjhon"
+   
+variable client_id {}
+variable client_secret {}
+variable ssh_public_key {}
+
+variable environment {
+    default = "dev"
 }
 
-variable "location" {
-  description = "eastus"
+variable location {
+    default = "westeurope"
+}
+
+variable node_count {
+  default = 2
+}
+
+
+
+variable dns_prefix {
+  default = "k8sAforo255sv"
+}
+
+variable cluster_name {
+  default = "k8sAforo255sv"
+}
+
+variable resource_group {
+  default = "kubernetesAforo255"
 }
