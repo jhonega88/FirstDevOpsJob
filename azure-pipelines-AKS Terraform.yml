@@ -12,7 +12,8 @@ steps:
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
-    secureFile: 'azure_rsa.pub'    
+    secureFile: 'azure_rsa.pub'
+  
 - task: TerraformCLI@0
   inputs:
     command: 'init'
@@ -23,14 +24,16 @@ steps:
     ensureBackend: true
     backendAzureRmResourceGroupName: 'terraform-backend-rg'
     backendAzureRmResourceGroupLocation: 'eastus'
-    backendAzureRmStorageAccountName: 'storageacctaforo255'
-    backendAzureRmContainerName: 'storageacctaforo255container'
+    backendAzureRmStorageAccountName: 'storageajg'
+    backendAzureRmContainerName: 'storageacctjg'
     backendAzureRmKey: 'Kubernetes-dev.tfstate'
     allowTelemetryCollection: true
+
 - task: TerraformCLI@0
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aks/kubernetes/'
     environmentServiceName: 'Azure_ServConnection'
+    #runAzLogin: true
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     allowTelemetryCollection: true
