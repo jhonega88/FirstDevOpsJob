@@ -17,13 +17,13 @@ variable node_count {
 
 
 variable dns_prefix {
-  default = "k8sjhon"
+  default = "k8sjhonv2"
 }
 
 variable cluster_name {
-  default = "k8sjhon"
+  default = "k8sjhonv2"
 }
 
 variable resource_group {
-  default = "kubernetesJhonRG"
+  default = "kubernetesJhonRGv2"
 }
