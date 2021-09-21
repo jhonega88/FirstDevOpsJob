@@ -31,7 +31,7 @@ steps:
     backendAzureRmStorageAccountName: 'stgdevopsj'
     backendAzureRmStorageAccountSku: 'StorageV2'
     backendAzureRmContainerName: 'containerjhon'
-    backendAzureRmKey: 'k8s.tfstate'
+    backendAzureRmKey: 'k8sV2.tfstate'
     allowTelemetryCollection: true
 
 - task: TerraformCLI@0
