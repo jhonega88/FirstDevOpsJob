@@ -29,7 +29,7 @@ steps:
     backendAzureRmStorageAccountName: 'stgdevopsj'
     backendAzureRmStorageAccountSku: 'StorageV2'
     backendAzureRmContainerName: 'containerjhon'
-    backendAzureRmKey: 'k8S.tfstate'
+    backendAzureRmKey: 'k8S2.tfstate'
     allowTelemetryCollection: true
 
 
